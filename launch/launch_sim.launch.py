@@ -37,11 +37,34 @@ def generate_launch_description():
                                    '-entity', 'my_bot'],
                         output='screen')
 
+    diff_drive_spawner = Node(
+        package = "controller_manager",
+        executable = "spawner",
+        arguments=["diff_cont", "-p", "/home/aryan/ros2_ws/src/osiris_ros/config/diff_cont_params.yaml"]
+        #parameters=["/home/aryan/ros2_ws/src/osiris_ros/config/diff_cont_params.yaml"]
+        # '''parameters=[
+        #     {"publish_rate": 50},
+        #     {"base_frame_id": "base_link"},
+        #     #{"left_wheel_names": ['left_back_wheel_joint']},
+        #     #{"right_wheel_names": ['right_back_wheel_joint']},
+        #     {"wheel_separation": 0.35},
+        #     {"wheel_radius": 0.05}
+        # ]'''
+    )
+
+    joint_broad_spawner = Node(
+        package = "controller_manager",
+        executable = "spawner",
+        arguments=["joint_broad"],
+    )
 
 
-    # Launch them all!
+
+        # Launch them all!
     return LaunchDescription([
         rsp,
         gazebo,
         spawn_entity,
+        diff_drive_spawner,
+        joint_broad_spawner
     ])
